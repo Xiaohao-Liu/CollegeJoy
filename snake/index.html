@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>snake</title>
+ 
+	<style type="text/css">
+
+    body{
+        background:#333;
+    }
+	#canvas_frame{
+        height: 500px;
+        width: 500px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 10px;
+	}
+	canvas{
+		background:#673ab7;
+	}
+	#start_button{
+		height:40px;
+		width:150px;
+		border:0px;
+		background:#000;
+		color:white;
+		line-height:40px;
+		font-size:15px;
+	}
+	</style>
+</head>
+<body>
+	<div id="canvas_frame">
+		<canvas id="mycanvas" width="500" height="500"></canvas>
+	</div>
+	<section style="height:40px;width:100%;text-align:center;">
+		<button id="start_button" onclick = "moveSnake();">start</button>
+	</section>
+ 
+	<script type="text/javascript">
+	var canvas = document.getElementById('mycanvas');
+	var ctx = canvas.getContext('2d');
+	/*
+	//画格子
+	 ctx.strokeStyle = 'white';
+	for( var i = 1; i <= 30; i++ ){
+		ctx.beginPath();
+		ctx.moveTo( 15 * i, 0 );
+		ctx.lineTo( 15 * i, 450 );
+		ctx.closePath();
+		ctx.stroke();
+	}
+	for( var i = 1; i <= 30; i++ ){
+		ctx.beginPath();
+		ctx.moveTo( 0, 15 * i );
+		ctx.lineTo( 450, 15 * i );
+		ctx.closePath();
+		ctx.stroke();
+	}
+*/
+	//创建游戏对象
+	var game = {
+		width : 500,
+		height : 500,
+	};
+	//创建一条蛇
+	var snake = {
+		head : { x : 15 * 3, y : 0 },
+		body : [{ x : 15 * 2, y : 0 },{ x : 15 * 1, y : 0 },{ x : 0, y : 0 }],
+		length : 4,
+		speed : 100,
+		direction: "right",
+	};
+	//创建食物
+	var food = {
+		x : 300,
+		y : 150,
+		color : "green",
+	};
+ 
+	//描绘蛇
+	function drawSnake(){
+		ctx.clearRect( 0, 0, game.width, game.height );
+		var headImg = new Image();
+		var headSrc = "./assets/snake_head_min_" + snake.direction +".png";
+		headImg.src= headSrc;
+		ctx.drawImage(headImg, snake.head.x, snake.head.y );
+		for( var i = 0; i <= snake.body.length - 1; i++){
+			var cell = new Image();
+			cell.src = "./assets/snake_body_min.png";
+			ctx.drawImage(cell, snake.body[i].x, snake.body[i].y );
+		}
+	}
+	//描绘食物
+	function drawFood(){
+		if(IsEat()){
+			food.x = parseInt(Math.random() * 28) * 15;
+			food.y = parseInt(Math.random() * 28) * 15;
+		}
+		var foodImg = new Image();
+		foodImg.src="./assets/apple_min.png";
+		ctx.drawImage(foodImg, food.x, food.y );
+	}
+	//移动蛇
+	function moveSnake(){
+		for( var i = snake.body.length - 1; i > 0 ; i-- ){
+				snake.body[i].x = snake.body[i - 1].x;
+				snake.body[i].y = snake.body[i - 1].y;
+			}
+			snake.body[0].x = snake.head.x;
+			snake.body[0].y = snake.head.y;
+		switch( snake.direction ){
+			case "right":{
+				snake.head.x = snake.head.x + 15;
+				break;
+			} 
+			case "left":{
+				snake.head.x = snake.head.x - 15;
+				break;
+			}
+			case "up":{
+				snake.head.y = snake.head.y - 15;
+				break;
+			}
+			case "down":{
+				snake.head.y = snake.head.y + 15;
+				break;
+			}
+		}
+		drawSnake();
+		drawFood();
+		IsGameover();
+		setTimeout( 'moveSnake()', snake.speed );
+	}
+	//判断游戏结束
+	function IsGameover(){
+		if(snake.head.x >= game.width && snake.direction == 'right'){
+			alert("GameOver!");
+		}
+		if(snake.head.x <= -15 && snake.direction == 'left'){
+			alert("GameOver!");
+		}
+		if(snake.head.y >= game.height  && snake.direction == 'down'){
+			alert("GameOver!");
+		}
+		if(snake.head.y <= -15 && snake.direction == 'up'){
+			alert("GameOver!");
+		}
+		for( var i = 0; i < snake.body.length; i++ ){
+			if( snake.head.x == snake.body[i].x && snake.head.y == snake.body[i].y){
+				alert("GameOver!");
+			}
+		}
+	}
+	//监听键盘输入
+	document.onkeydown = function(e){
+		var code = e.keyCode;
+		switch(code){
+			case 38:{
+				if( snake.direction != 'down'){
+					snake.direction='up';
+				}
+				break;
+			}
+			case 39:{
+				if( snake.direction != 'left'){
+					snake.direction='right';
+				}
+				break;
+		}
+			case 40:{
+				if( snake.direction != 'up'){
+					snake.direction='down';
+				}
+				break;
+			}
+			case 37:{
+				if( snake.direction != 'right'){
+					snake.direction='left';
+				}
+				break;
+			}
+			default:break;
+		}
+	}
+//判断是否吃了食物
+	function IsEat(){
+		if( snake.head.x == food.x && snake.head.y == food.y){
+			snake.body[snake.body.length] = { x : 0, y : 0};
+			return 1;
+		}
+		return 0;
+	}
+	</script>
+</body>
+</html>
