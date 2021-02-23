@@ -4,3 +4,6 @@ see more on: [关于一个简易的Html5音乐播放器的制作](https://blog.c
 here is a [demo](https://wykxldz.github.io/CollegeJoy/SimpleMusicPlayer/) for you.
 
 ![](./player.png)
+
+
+Note: resources are collected from the Internet and are only for learning and communication, not for commercial use.
