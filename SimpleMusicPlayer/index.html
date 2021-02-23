@@ -1,0 +1,67 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>MUSIC</title>
+		<style type="text/css">
+			*{margin:0px;padding:0px;}
+			#bg{position: absolute;top: 0px;left: 0px;background: url(./assets/bg.jpg);background-size: cover;background-position:center;height: 100%;width: 100%;overflow: hidden;z-index:-1;}
+			#music_icon{position: fixed;top: 10px;right: 10px;background: url(./assets/music_icon.png);background-size: 30px;height: 50px;width: 50px;background-color: white;border-radius: 10px;background-position: center;background-repeat: no-repeat;cursor: pointer;}
+			#music_board{height:500px;width:400px;background:rgba(255,255,255,.5);margin:10% auto;border-radius:12px;box-shadow:0px 0px 15px #222;backdrop-filter: blur(5px);display:none;}
+			#music_gif{height:280px;width:380px;position:relative;top:20px;left:10px;background:url("./assets/music_5.gif");background-size:cover;border-radius: 10px;}
+			#music_control{text-align: center;position: relative;top: 50px;color: #333;font-size: 1.5em;font-weight: bold;}
+			#control{margin-top:45px;width:100%;height:70px;text-align:center;}
+		</style>
+	</head>
+	<body>
+		<audio id="music" src="./assets/romantic_travel.mp3" loop="loop"></audio>
+		<div id="bg">
+			
+		</div>
+        <div id="music_icon"></div>
+        <div id="music_board">
+            <div id="music_gif"></div>
+            <div id="music_control">MUSIC BOARD
+                <div id="control">
+                    <img  id="control_img" height=30 src="./assets/pause_button.png" height="60px">
+                </div>
+            </div>
+        </div>
+		<script type="text/javascript">
+		var music = document.getElementById("music");//建立audiod对象
+		var control_img = document.getElementById("control_img");//建立播放按钮图片对象，为了更好的操作
+		var music_board = document.getElementById("music_board");//建立music面板的对象，为了更好的操作
+		var lock = false;//设置一个布尔变量，用于判断音乐的播放与暂停
+        
+
+
+        function music_control(){
+            //音乐开始与暂停
+            if( lock == false){
+				music.play();
+				control_img.setAttribute("src", "./assets/pause_button.png");
+				lock = true;
+			}
+			else{
+				music.pause();
+				control_img.setAttribute("src", "./assets/play_button.png");
+				lock = false;
+			}
+        }
+        control_img.onclick = music_control;
+        document.getElementById("music_icon").onclick = function(){
+            //music面板的显现与展示
+            if( music_board.style.display == "none"){
+                music_board.style.display = "block";
+				lock = false;
+				music_control();
+			}
+			else{
+				music_board.style.display ="none";
+				lock = true;
+				music_control();
+			}
+        }
+		</script>
+	</body>
+</html>
