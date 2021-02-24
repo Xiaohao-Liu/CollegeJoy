@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MacOS Dock</title>
+        <link rel="stylesheet" href="./dock.css">
+        <style>
+            *{margin: 0px;padding: 0px;}
+            .bg{
+                position: absolute;
+                z-index: -1;
+                top:0px;
+                left: 0px;
+                height: 100vh;
+                width: 100vw;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image: url("./pic/bg.jpg");
+            }
+        </style>
+    </head>
+    <body>
+        <div class="bg"></div>
+        <div class="dock" id="dock">
+        </div>
+    </body>
+    <script src="./dock.js"></script>
+    <script type="text/javascript">
+    const dockdom = document.getElementById("dock");
+    const items=[
+        {
+            icon:"./pic/xcode_icon.png",
+            title:"Xcode"
+        },
+        {
+            icon:"./pic/final-cut-pro_icon.png",
+            title:"Final Cut Pro"
+        },
+        {
+            icon:"./pic/apple-developer_icon.png",
+            title:"Apple Developer"
+        },
+        {
+            icon:"./pic/fantastical-calendar-tasks_icon.png",
+            title:"Fantastical"
+        },
+        {
+            icon:"./pic/microsoft-to-do_icon.png",
+            title:"Microsoft To Do"
+        },
+        {
+            icon:"./pic/tv_icon.png",
+            title:"TV"
+        },
+        {
+            icon:"./pic/safari_icon.png",
+            title:"Safari"
+        },
+        {
+            icon:"./pic/numbers_icon.png",
+            title:"Numbers"
+        },
+        {
+            icon:"./pic/apple-remote-desktop_icon.png",
+            title:"Apple Remote Desktop"
+        },
+    ]
+    const option = {
+        icon_size:50,
+        icon_padding:5,
+        scale:2
+    }
+    const macdock = new MacDock(dockdom,items,option)
+    </script>
+</html>
