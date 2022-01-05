@@ -17,6 +17,7 @@
                 background-size: cover;
                 background-image: url("./pic/bg.jpg");
             }
+            #dock2{bottom:200px;}
         </style>
     </head>
     <body>
@@ -27,6 +28,7 @@
     <script src="./dock.js"></script>
     <script type="text/javascript">
     const dockdom = document.getElementById("dock");
+    const dockdom2 = document.getElementById("dock2");
     const items=[
         {
             icon:"./pic/xcode_icon.png",
@@ -59,16 +61,11 @@
         {
             icon:"./pic/numbers_icon.png",
             title:"Numbers"
-        },
-        {
-            icon:"./pic/apple-remote-desktop_icon.png",
-            title:"Apple Remote Desktop"
-        },
+        }
     ]
     const option = {
         icon_size:50,
-        icon_padding:5,
-        scale:2
+        scale:3
     }
     const macdock = new MacDock(dockdom,items,option)
     </script>
